@@ -160,6 +160,10 @@ resource "aws_elastic_beanstalk_environment" "point-of-sale-elastic-beanstalk-en
 resource "aws_instance" "Database" {
     ami = "ami-0427090fd1714168b"
     instance_type = "t2.micro"
+    key_name = "levelup"
+    subnet_id                   = aws_subnet.subnet1.id
+    vpc_security_group_ids      = [aws_security_group.point-of-sale-instance-sg.id]
+    associate_public_ip_address = true
     
     tags = {
         Name = "nosql embedded database"
