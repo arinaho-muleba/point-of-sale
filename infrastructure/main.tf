@@ -91,7 +91,7 @@ resource "aws_elastic_beanstalk_application" "point-of-sale-beanstalk-backend-ap
 resource "aws_elastic_beanstalk_environment" "point-of-sale-elastic-beanstalk-env" {
   name                = "point-of-sale-elastic-beanstalk-env"
   application         = aws_elastic_beanstalk_application.point-of-sale-beanstalk-backend-app.name
-  solution_stack_name = "64bit Amazon Linux 2023 v6.1.5 running Node.js 20"
+  solution_stack_name = "64bit Amazon Linux 2023 v6.1.7 running Node.js 20"
   cname_prefix        = "point-of-sale-app"
 
   setting {
