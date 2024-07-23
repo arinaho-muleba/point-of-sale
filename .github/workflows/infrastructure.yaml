@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "google-forms/terraform"
+        working-directory: "infrastructure"
     steps:
       - name: Check out code
         uses: actions/checkout@v2
