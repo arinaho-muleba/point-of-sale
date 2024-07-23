@@ -92,7 +92,7 @@ resource "aws_elastic_beanstalk_environment" "point-of-sale-elastic-beanstalk-en
   name                = "point-of-sale-elastic-beanstalk-env"
   application         = aws_elastic_beanstalk_application.point-of-sale-beanstalk-backend-app.name
   solution_stack_name = "64bit Amazon Linux 2023 v6.1.5 running Node.js 20"
-  cname_prefix        = "google-forms-app"
+  cname_prefix        = "point-of-sale-app"
 
   setting {
     namespace = "aws:ec2:vpc"
@@ -133,7 +133,7 @@ resource "aws_elastic_beanstalk_environment" "point-of-sale-elastic-beanstalk-en
   setting {
     namespace = "aws:elbv2:loadbalancer"
     name      = "SecurityGroups"
-    value     = aws_security_group.google-forms-instance-sg.id
+    value     = aws_security_group.point-of-sale-instance-sg.id
   }
 
   setting {
