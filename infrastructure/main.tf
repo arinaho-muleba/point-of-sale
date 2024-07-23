@@ -158,7 +158,7 @@ resource "aws_elastic_beanstalk_environment" "point-of-sale-elastic-beanstalk-en
 }
 
 resource "aws_instance" "Database" {
-    ami = "ami-0d13e3e640877b0b9"
+    ami = "ami-0427090fd1714168b"
     instance_type = "t2.micro"
     
     tags = {
