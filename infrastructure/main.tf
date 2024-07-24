@@ -185,7 +185,7 @@ resource "aws_instance" "Database" {
 }
 resource "aws_network_interface" "test" {
   subnet_id       = aws_subnet.subnet1.id
-  private_ips     = ["10.0.1.1"]
+  private_ips     = ["10.0.1.5"]
   security_groups = [aws_security_group.point-of-sale-instance-sg.id]
 
   attachment {
