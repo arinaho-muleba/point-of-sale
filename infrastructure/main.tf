@@ -164,6 +164,15 @@ resource "aws_instance" "Database" {
     subnet_id                   = aws_subnet.subnet1.id
     vpc_security_group_ids      = [aws_security_group.point-of-sale-instance-sg.id]
     associate_public_ip_address = true
+
+    user_data = <<-EOF
+        #!/bin/bash
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sudo sh get-docker.sh
+        sudo groupadd docker
+        sudo usermod -aG docker ubuntu
+        newgrp docker
+        EOF
     
     tags = {
         Name = "nosql embedded database"
