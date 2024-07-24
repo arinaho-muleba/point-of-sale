@@ -183,7 +183,7 @@ resource "aws_instance" "Database" {
     
   depends_on = [aws_route_table_association.route_table_asso]
 }
-resource "aws_network_interface" "test" {
+/*resource "aws_network_interface" "test" {
   subnet_id       = aws_subnet.subnet1.id
   private_ips     = ["10.0.1.5"]
   security_groups = [aws_security_group.point-of-sale-instance-sg.id]
@@ -192,4 +192,4 @@ resource "aws_network_interface" "test" {
     instance     = aws_instance.Database.id
     device_index = 1
   }
-}
+}*/
