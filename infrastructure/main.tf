@@ -66,7 +66,7 @@ resource "aws_security_group" "point-of-sale-instance-sg" {
   }
   ingress {
     from_port   = 80
-    to_port     = 8888
+    to_port     = 8091
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -172,7 +172,7 @@ resource "aws_instance" "Database" {
         sudo groupadd docker
         sudo usermod -aG docker ubuntu
         newgrp docker
-        docker run -d --name db -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 couchbase
+        docker run -d --name db -e password=jsondecode(data.aws_secretsmanager_secret_version.creds.secret_string)["username"] -e user=jsondecode(data.aws_secretsmanager_secret_version.creds.secret_string)["password"] -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 couchbase
         EOF
     
     tags = {
