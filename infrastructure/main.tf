@@ -172,6 +172,7 @@ resource "aws_instance" "Database" {
         sudo groupadd docker
         sudo usermod -aG docker ubuntu
         newgrp docker
+        docker run -d --name db -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 couchbase
         EOF
     
     tags = {
