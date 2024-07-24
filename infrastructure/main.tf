@@ -169,10 +169,7 @@ resource "aws_instance" "Database" {
         #!/bin/bash
         curl -fsSL https://get.docker.com -o get-docker.sh
         sudo sh get-docker.sh
-        sudo groupadd docker
-        sudo usermod -aG docker ubuntu
-        newgrp docker
-        docker run -d --name db -e password=jsondecode(data.aws_secretsmanager_secret_version.creds.secret_string)["username"] -e user=jsondecode(data.aws_secretsmanager_secret_version.creds.secret_string)["password"] -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 couchbase
+        sudo docker run -d --name db -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 couchbase
         EOF
     
     tags = {
