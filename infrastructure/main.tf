@@ -167,16 +167,19 @@ resource "aws_instance" "Database" {
 
     user_data = <<-EOF
         #!/bin/bash
-            curl -fsSL https://get.docker.com -o get-docker.sh
-            sudo sh get-docker.sh
-            curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-noarch.deb
-            sudo dpkg -i ./couchbase-release-1.0-noarch.deb
-            sudo apt-get update
-            sudo apt-get install couchbase-server-community
-            sudo apt-get install couchbase-server-community=7.6.2
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sudo sh get-docker.sh
+        curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-noarch.deb
+        sudo dpkg -i ./couchbase-release-1.0-noarch.deb
+        sudo apt-get update
+        sudo apt-get install couchbase-server-community
+        sudo apt-get install couchbase-server-community=7.6.2
         EOF
     
     tags = {
         Name = "nosql embedded database"
     }
+
+    
+  depends_on = [aws_route_table_association.route_table_asso]
 }
