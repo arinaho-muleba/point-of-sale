@@ -165,15 +165,15 @@ resource "aws_instance" "Database" {
     vpc_security_group_ids      = [aws_security_group.point-of-sale-instance-sg.id]
     associate_public_ip_address = true
 
-    user_data = <<-EOF
-        #!/bin/bash
-        curl -fsSL https://get.docker.com -o get-docker.sh
-        sudo sh get-docker.sh
-        curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-noarch.deb
-        sudo dpkg -i ./couchbase-release-1.0-noarch.deb
-        sudo apt-get update -y
-        sudo apt-get install couchbase-server-community -y
-        sudo apt-get install couchbase-server-community=7.6.2 -y
+    user_data = <<EOF
+            #!/bin/bash
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            sudo sh get-docker.sh
+            curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-noarch.deb
+            sudo dpkg -i ./couchbase-release-1.0-noarch.deb
+            sudo apt-get update -y
+            sudo apt-get install couchbase-server-community -y
+            sudo apt-get install couchbase-server-community=7.6.2 -y
         EOF
     
     tags = {
