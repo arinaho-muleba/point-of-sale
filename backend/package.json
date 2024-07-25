@@ -12,9 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
-    "couchbase": "^4.4.0",
     "express": "^4.19.2",
-    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "tingodb": "^0.6.1"
   }
