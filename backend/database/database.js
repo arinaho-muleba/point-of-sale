@@ -1,10 +1,23 @@
-const Engine = require('tingodb')();
+const fs = require("fs");
+const path = require("path");
+const Engine = require("tingodb")();
 
-const db = new Engine.Db(__dirname + '../../data', {});
+// Define the path to the data directory
+const dataDir = path.join(__dirname, "data");
+
+console.log(dataDir);
+
+// Check if the directory exists, and create it if it doesn't
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
+
+// Initialize the database
+const db = new Engine.Db(dataDir, {});
 
 // Collections
-const products = db.collection('products');
-const categories = db.collection('categories');
-const users = db.collection('users');
+const productsCollection = db.collection("products");
+const categoriesCollection = db.collection("categories");
+const usersCollection = db.collection("users");
 
-module.exports = {products, categories, users}
+module.exports = { productsCollection, categoriesCollection, usersCollection };

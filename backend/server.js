@@ -105,6 +105,22 @@ app.delete("/products/:id", verifyToken, (req, res) => {
   });
 });
 
+app.get("/products/:id", verifyToken, (req, res) => {
+  const { id } = req.params;
+
+  productsCollection.findOne({ _id: id }, (err, product) => {
+    if (err) {
+      return res
+        .status(500)
+        .send("There was a problem retrieving the product.");
+    }
+    if (!product) {
+      return res.status(404).send("Product not found.");
+    }
+    res.status(200).send(product);
+  });
+});
+
 app.get("/products", verifyToken, (req, res) => {
   productsCollection.find().toArray((err, items) => {
     if (err)
@@ -151,7 +167,7 @@ app.put("/products/:id/add", verifyToken, (req, res) => {
   );
 });
 
-app.post("products/purchase", verifyToken, (req, res) => {
+app.post("/products/purchase", verifyToken, (req, res) => {
   const { productId, quantity } = req.body;
 
   productsCollection.findOne({ _id: productId }, (err, product) => {
@@ -184,8 +200,10 @@ app.get("/products/search", verifyToken, (req, res) => {
   const { name, category } = req.query;
   const query = {};
 
-  if (name) query.name = { $regex: new RegExp(name, "i") };
-   if (category) query.category = category;
+  if (name) query.name = new RegExp(name, "i");
+  if (category) query.category = category;
+
+  console.log(query);
 
   productsCollection.find(query).toArray((err, items) => {
     if (err)
@@ -217,7 +235,7 @@ app.get("/categories", verifyToken, (req, res) => {
   });
 });
 
-// const userRouter = require('./routes/users');
+// const userRouter = require('./routes/users.js');
 // app.use('/users', userRouter);
 
 app.listen(3000, () => {
