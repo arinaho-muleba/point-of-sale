@@ -1,0 +1,9 @@
+{"k":"0000000078","o":"0000000148","v":"001"}
+{"_id":4,"_uid":4,"_dt":1721944105194,"_s":"27497a228a1962a714687896d458a743"}
+{"name":"T-Shirt","description":"A comfortable and stylish T-Shirt","price":19.99,"quantity":100,"category":"Clothing","_id":{"$wrap":"$oid","v":4}}
+{"k":"0000000078","o":"0000000158","v":"001"}
+{"_id":5,"_uid":5,"_dt":1721944105195,"_s":"bb3e3851ee57df31adb039ae8ae037d2"}
+{"name":"Coffee Mug","description":"A beautiful mug for your morning coffee","price":9.99,"quantity":50,"category":"Kitchenware","_id":{"$wrap":"$oid","v":5}}
+{"k":"0000000078","o":"0000000148","v":"001"}
+{"_id":4,"_uid":5,"_dt":1721944141748,"_s":"53342ae408194539f776b3aac9dd75e9"}
+{"name":"T-Shirt","description":"A comfortable and stylish T-Shirt","price":19.99,"quantity":105,"category":"Clothing","_id":{"$wrap":"$oid","v":4}}
