@@ -159,7 +159,7 @@ resource "aws_elastic_beanstalk_environment" "point-of-sale-elastic-beanstalk-en
 
 resource "aws_instance" "Database" {
     ami = "ami-0427090fd1714168b"
-    instance_type = "t2.micro"
+    instance_type = "t2.medium"
     key_name = "levelup"
     subnet_id                   = aws_subnet.subnet1.id
     vpc_security_group_ids      = [aws_security_group.point-of-sale-instance-sg.id]
@@ -168,12 +168,9 @@ resource "aws_instance" "Database" {
     user_data = <<-EOT
                 #!/bin/bash
                 sudo curl -fsSL https://get.docker.com -o get-docker.sh
-                sudo sh get-docker.sh
-                sudo curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-noarch.deb
-                sudo dpkg -i ./couchbase-release-1.0-noarch.deb
-                sudo apt-get update -y
-                sudo apt-get install couchbase-server-community -y
-                sudo apt-get install couchbase-server-community=7.6.2 -y
+                sudo yum install docker -y
+                sudo systemctl start docker
+                sudo docker run -d --name db -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 couchbase
                 EOT
     
     tags = {
