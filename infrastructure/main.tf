@@ -149,6 +149,12 @@ resource "aws_elastic_beanstalk_environment" "point-of-sale-elastic-beanstalk-en
   }
 
   setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "InstanceType"
+    value     = "t2.medium"
+  }
+
+  setting {
     namespace = "aws:elasticbeanstalk:environment:process:default"
     name      = "MatcherHTTPCode"
     value     = "200"
