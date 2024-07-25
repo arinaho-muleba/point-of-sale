@@ -4,22 +4,32 @@ const { connectToBucket } = require('../core/connectionconfig');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const { transaction } = require('../data-facade/transaction'); 
+
 router.post('/', async (req, res) => {
     try {
         const bucket = await connectToBucket();
-        const collection = bucket.defaultCollection();
+        const scope = bucket.scope(process.env.SCOPE_NAME);
+        const collection = scope.collection(process.env.COLLECTION_NAME);
 
-        const { items, total } = req.body;
+        const { customerId, items, totalAmount, paymentMethod, storeId, salespersonId, additionalDetails } = req.body;
 
-        const transaction = {
-            type: 'transaction',
+        const newTransaction = {
+            transactionId: `transaction_${Date.now()}`,
+            timestamp: new Date().toISOString(),
+            customerId,
             items,
-            total,
-            timestamp: new Date().toISOString()
+            totalAmount,
+            paymentMethod,
+            transactionStatus: 'pending',
+            storeId,
+            salespersonId,
+            additionalDetails
         };
 
-        const result = await collection.insert(`transaction_${Date.now()}`, transaction);
-        res.status(201).json(result);
+        const result = await collection.insert(newTransaction.transactionId, newTransaction);
+
+        res.status(201).json({ transactionId: newTransaction.transactionId, message: 'Transaction inserted successfully' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
