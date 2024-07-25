@@ -71,5 +71,6 @@ jobs:
           application_name: point-of-sale-application-backend
           environment_name: point-of-sale-elastic-beanstalk-env
           version_label: ${{ github.run_number }}
+          use_existing_version_if_available: true
           region: ${{ env.AWS_REGION }}
           deployment_package: "${{ github.workspace }}/backend/deploy.zip"
