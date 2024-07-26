@@ -105,22 +105,6 @@ app.delete("/products/:id", verifyToken, (req, res) => {
   });
 });
 
-app.get("/products/:id", verifyToken, (req, res) => {
-  const { id } = req.params;
-
-  productsCollection.findOne({ _id: id }, (err, product) => {
-    if (err) {
-      return res
-        .status(500)
-        .send("There was a problem retrieving the product.");
-    }
-    if (!product) {
-      return res.status(404).send("Product not found.");
-    }
-    res.status(200).send(product);
-  });
-});
-
 app.get("/products", verifyToken, (req, res) => {
   productsCollection.find().toArray((err, items) => {
     if (err)
@@ -200,6 +184,8 @@ app.get("/products/search", verifyToken, (req, res) => {
   const { name, category } = req.query;
   const query = {};
 
+  console.log("working");
+
   if (name) query.name = new RegExp(name, "i");
   if (category) query.category = category;
 
@@ -211,6 +197,23 @@ app.get("/products/search", verifyToken, (req, res) => {
         .status(500)
         .send("There was a problem searching for products.");
     res.status(200).send(items);
+  });
+});
+
+
+app.get("/products/:id", verifyToken, (req, res) => {
+  const { id } = req.params;
+
+  productsCollection.findOne({ _id: id }, (err, product) => {
+    if (err) {
+      return res
+        .status(500)
+        .send("There was a problem retrieving the product.");
+    }
+    if (!product) {
+      return res.status(404).send("Product not found.");
+    }
+    res.status(200).send(product);
   });
 });
 
