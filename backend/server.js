@@ -1,8 +1,10 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const Engine = require("tingodb")();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,7 +17,7 @@ const categoriesCollection = db.collection("categories");
 const usersCollection = db.collection("users");
 
 // Secret key for JWT
-const secretKey = "jwt_secret";
+const secretKey = process.env.JWT_SECRET;
 
 // Middleware to verify token
 const verifyToken = (req, res, next) => {
@@ -43,7 +45,7 @@ app.post("/users/register", (req, res) => {
     { username, password: hashedPassword },
     (err, user) => {
       if (err) return res.status(500).send(err);
-      const token = jwt.sign({ id: user._id }, secretKey, { expiresIn: 600 });
+      const token = jwt.sign({ id: user._id }, secretKey, { expiresIn: 3600 });
       res.status(200).send({ auth: true, token });
     }
   );
@@ -60,7 +62,7 @@ app.post("/users/login", (req, res) => {
     if (!passwordIsValid)
       return res.status(401).send({ auth: false, token: null });
 
-    const token = jwt.sign({ id: user._id }, secretKey, { expiresIn: 6000 });
+    const token = jwt.sign({ id: user._id }, secretKey, { expiresIn: 3600 });
     res.status(200).send({ auth: true, token });
   });
 });
@@ -199,7 +201,6 @@ app.get("/products/search", verifyToken, (req, res) => {
     res.status(200).send(items);
   });
 });
-
 
 app.get("/products/:id", verifyToken, (req, res) => {
   const { id } = req.params;
