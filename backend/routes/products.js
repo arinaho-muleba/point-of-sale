@@ -40,7 +40,7 @@ router.delete("/:id", verifyToken, (req, res) => {
   });
 });
 
-router.get("/ts", verifyToken, (req, res) => {
+router.get("/", verifyToken, (req, res) => {
   productsCollection.find().toArray((err, items) => {
     if (err)
       return res
