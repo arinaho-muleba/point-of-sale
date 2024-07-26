@@ -35,15 +35,15 @@ jobs:
       - name: Check out terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
-        run: terraform init
+      # - name: Terraform Init
+      #   run: terraform init
 
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan
+      # - name: Terraform Plan
+      #   id: plan
+      #   run: terraform plan
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve
 
       - name: Terraform Destroy
         run: terraform destroy 
