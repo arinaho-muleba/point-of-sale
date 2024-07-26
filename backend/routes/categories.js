@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { categoriesCollection } = require("../database/database");
-const {verifyToken} = require("../controller/authentication")
+const { verifyToken } = require("../middleware/authentication");
 
 router.post("/", verifyToken, (req, res) => {
   const { name, description } = req.body;

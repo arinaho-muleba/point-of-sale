@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const { productsCollection } = require("../database/database");
-const {verifyToken} = require("../controller/authentication")
+const {verifyToken} = require("../middleware/authentication")
 
 router.post("/", verifyToken, (req, res) => {
   const products = req.body;
