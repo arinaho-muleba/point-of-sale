@@ -11,15 +11,12 @@ app.use(bodyParser.json());
 
 const db = new Engine.Db(__dirname + "/data", {});
 
-// Collections
 const productsCollection = db.collection("products");
 const categoriesCollection = db.collection("categories");
 const usersCollection = db.collection("users");
 
-// Secret key for JWT
 const secretKey = process.env.JWT_SECRET;
 
-// Middleware to verify token
 const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
   if (!token)
@@ -36,19 +33,26 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-// User authentication routes
 app.post("/users/register", (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = bcrypt.hashSync(password, 8);
 
-  usersCollection.insert(
-    { username, password: hashedPassword },
-    (err, user) => {
-      if (err) return res.status(500).send(err);
-      const token = jwt.sign({ id: user._id }, secretKey, { expiresIn: 3600 });
-      res.status(200).send({ auth: true, token });
-    }
-  );
+  usersCollection.findOne({ username }, (err, user) => {
+    if (err) return res.status(500).send(err);
+    if (user) return res.status(400).send({ message: "User already exists" });
+
+    const hashedPassword = bcrypt.hashSync(password, 8);
+
+    usersCollection.insert(
+      { username, password: hashedPassword },
+      (err, user) => {
+        if (err) return res.status(500).send(err);
+        const token = jwt.sign({ id: user._id }, secretKey, {
+          expiresIn: 3600,
+        });
+        res.status(200).send({ auth: true, token });
+      }
+    );
+  });
 });
 
 app.post("/users/login", (req, res) => {
@@ -67,16 +71,13 @@ app.post("/users/login", (req, res) => {
   });
 });
 
-// Product routes
 app.post("/products", verifyToken, (req, res) => {
-  const products = req.body; // Assuming the request body contains an array of products
+  const products = req.body;
 
-  // Check if it's a single product or an array
   if (!Array.isArray(products)) {
-    products = [products]; // Convert single product to an array
+    products = [products];
   }
 
-  // Loop through each product and insert them one by one
   let insertedProducts = [];
   products.forEach((product) => {
     const { name, description, price, quantity, category } = product;
@@ -91,9 +92,9 @@ app.post("/products", verifyToken, (req, res) => {
       }
     );
   });
-  // After all insertions are done, send the response
+
   Promise.all(insertedProducts).then(() => {
-    res.status(201).send(insertedProducts); // Send all inserted products
+    res.status(201).send(insertedProducts);
   });
 });
 
