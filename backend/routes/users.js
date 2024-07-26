@@ -2,8 +2,6 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const { usersCollection } = require("../database/database");
-const bodyParser = require("body-parser");
-
 
 router.post("/register", (req, res) => {
   const { username, password } = req.body;
