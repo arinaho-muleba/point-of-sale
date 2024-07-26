@@ -45,6 +45,9 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
+      - name: Terraform Destroy
+        run: terraform destroy 
+
   BuildAndDeployServer:
     runs-on: ubuntu-latest
     needs: ConfigureAwsAndTerraform
