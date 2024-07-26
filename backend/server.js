@@ -7,7 +7,7 @@ app.use(express.json());
 
 // Routes
 const transactionRoutes = require('./controller/TransactionController');
-app.use('/transactions', transactionRoutes);
+app.use('/store', transactionRoutes);
 
 // Start server
 app.listen(PORT, () => {

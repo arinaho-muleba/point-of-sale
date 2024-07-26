@@ -13,6 +13,7 @@ const config = {
 
 const connectToBucket = async () => {
     try {
+        console.log(config)
         const cluster = await couchbase.connect(config.clusterConnStr, {
             username: config.username,
             password: config.password
